@@ -8,6 +8,16 @@
 
 That reframing matters because units and dollars can disagree even when the units-level plan looks perfectly healthy. A family can hit 100% of its unit forecast and still miss its revenue target — if the mix shifted toward a lower-priced item, if a price increase didn't stick, or if the revenue target itself was built on a different (often more optimistic) volume assumption than the one Demand and Supply just agreed to. IBP is the discipline of catching that gap in the same monthly cycle, instead of discovering it in a quarterly earnings review three months later.
 
+```mermaid
+flowchart LR
+  A["Sales and Demand consensus forecast"] --> D["IBP reconciliation"]
+  B["Ops supply and capacity plan"] --> D
+  C["Finance revenue and margin target"] --> D
+  D --> E["One integrated plan"]
+```
+
+*IBP pulls Finance in as a peer input, not a downstream recipient — three independent numbers reconciled into one plan.*
+
 ## 2. Two forecasts, two owners, one revenue number
 
 Recall from the [week setup](../README.md): `financial_targets.revenue_target` was built by Finance during **last quarter's** budget cycle — before this month's consensus forecast existed. It is, in effect, **a third forecast**, built independently, on its own timeline, by a third owner. IBP's central move is comparing what that target *implies* about volume against what Demand and Supply have since agreed to:
@@ -127,6 +137,15 @@ The output of all this reconciliation work is not a bigger spreadsheet of number
 2. **The cause.** "April's regular + overtime + subcontract ceiling (11,250 units) is below the 12,800-unit consensus forecast."
 3. **The options, each costed.** "(a) Pre-build ~1,550 units of buffer using Q1's unused overtime/subcontract capacity, at an incremental cost of roughly $X; (b) accept the shortfall as a planned, communicated backorder; (c) push the April retail-launch ramp assumption back to Demand for revalidation."
 4. **A recommendation, with the trade-off stated.** "Recommend (a): the incremental capacity cost is smaller than the lost-revenue risk of a stockout during a partner launch month, and it uses capacity that would otherwise sit idle in Q1."
+
+```mermaid
+flowchart TD
+  A["The number"] --> B["The cause"]
+  B --> C["The options each costed"]
+  C --> D["A recommendation with the trade-off stated"]
+```
+
+*The four required parts of a gap-closing recommendation, in order — stopping early is an incomplete report.*
 
 That four-part shape — number, cause, costed options, recommendation — is what [Exercise 3](../exercises/exercise-03-gap-analysis-and-actions.md), both challenges, and the mini-project all grade you on. A gap report that stops at step 1 ("April looks bad") hasn't done the job; a recommendation without a stated cost for the alternative it rejected hasn't either.
 

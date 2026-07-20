@@ -36,6 +36,17 @@ INSERT INTO demo_demand VALUES (1,1000),(2,1000),(3,1300),(4,1700),(5,1600),(6,1
 
 The three strategies are each an **iterative simulation** — this month's ending inventory depends on last month's ending inventory, so this is naturally a Python loop (the same reason Week 7's routing heuristics were Python, not SQL — SQL is superb at set-based aggregation and terrible at "carry a running state forward one row at a time, making a decision at each step").
 
+```mermaid
+flowchart LR
+  A["Beginning inventory"] --> B["Set capacity for the month"]
+  B --> C["Regular production plus overtime"]
+  C --> D["Meet that month demand"]
+  D --> E["Ending inventory"]
+  E -->|Carries into next month| A
+```
+
+*Why aggregate planning is a loop, not a single query — each month's ending inventory becomes next month's beginning inventory.*
+
 ### Chase — hire/fire to match demand exactly
 
 ```python

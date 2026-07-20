@@ -145,6 +145,17 @@ The whole point of the classification is the mapping that follows it:
 | **B** | **Middle** | Picked regularly, but the travel-cost multiplier is smaller — a farther walk hurts less |
 | **C** | **Reserve** (farthest) | Picked rarely — a long walk once or twice a month barely moves the total |
 
+```mermaid
+flowchart LR
+  F["Rank SKUs by pick frequency"] --> A["Class A - top cumulative share"]
+  F --> B["Class B - next slice"]
+  F --> C["Class C - remaining long tail"]
+  A --> GZ["Golden zone - closest slots"]
+  B --> MZ["Middle zone"]
+  C --> RZ["Reserve zone - farthest slots"]
+```
+*Mapping ABC velocity class to slotting zone.*
+
 Austin East DC's *current* slotting (from the [week setup](../README.md)) does almost the opposite: it was assigned alphabetically by SKU name, and the alphabet has no relationship whatsoever to pick frequency. Look at where two of the extremes actually sit today:
 
 ```sql

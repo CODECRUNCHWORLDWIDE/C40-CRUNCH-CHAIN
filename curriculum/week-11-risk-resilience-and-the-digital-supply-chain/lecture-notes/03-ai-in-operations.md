@@ -99,6 +99,18 @@ exception rules: persistence, severity tier, root-cause linkage  (Section 3)
                           high-cost or hard to reverse
 ```
 
+```mermaid
+flowchart TD
+  A["daily ops raw data"] --> B["Rolling baseline and z-score"]
+  B --> C["Exception rules persistence severity root cause"]
+  C --> D["Low severity log only"]
+  C --> E["Medium severity notify ops channel"]
+  C --> F["High severity escalate now"]
+  F --> G["Agent drafts or executes narrow reversible action"]
+  F --> H["Human approves high cost or hard to reverse action"]
+```
+*The anomaly-to-action pipeline: a signal escalates through severity tiers to logging, notification, or agent-assisted human-approved action.*
+
 This is the loop Exercise 3 has you build the first two stages of, and the mini-project asks you to wire all the way through to an alert.
 
 ## 6. Check yourself

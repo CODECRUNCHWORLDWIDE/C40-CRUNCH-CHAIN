@@ -36,6 +36,20 @@ Crunch Gear produces at three locations and ships to three regional distribution
 
 Total supply (15,000) exactly equals total demand (15,000) — this network is **balanced**. That's a deliberate teaching simplification; Section 6 covers what changes when it isn't.
 
+```mermaid
+flowchart LR
+  EP["El Paso Plant"] --> AUS["Austin East DC"]
+  EP --> MEM["Memphis DC"]
+  EP --> RNO["Reno DC"]
+  GDL["Guadalajara CMT"] --> AUS
+  GDL --> MEM
+  GDL --> RNO
+  HCM["Ho Chi Minh CMT"] --> AUS
+  HCM --> MEM
+  HCM --> RNO
+```
+*Every plant can ship to every DC — nine possible lanes, one decision variable each.*
+
 ## 2. Formulating the transportation problem
 
 **Decision variables.** Let $x_{ij}$ = units shipped from plant $i$ to DC $j$, for every plant-DC pair. With 3 plants and 3 DCs that's **nine** decision variables — $x_{EP,AUS}, x_{EP,MEM}, \dots, x_{HCM,RNO}$. This is the pattern to internalize: a transportation problem has one decision variable **per lane**, not per node.
@@ -179,6 +193,15 @@ for d in dcs:
 ```
 
 The solver will only route flow through `DUMMY` if there is truly no other way to balance the network — and the resulting flow tells you exactly which DC(s) would come up short.
+
+```mermaid
+flowchart TD
+  A["Compare total supply to total demand"] --> B{"Supply vs demand"}
+  B -->|"equal"| C["Balanced network all constraints can bind"]
+  B -->|"supply greater"| D["Some capacity unused solver shows slack"]
+  B -->|"supply less"| E["Infeasible add dummy plant with high cost"]
+```
+*How the solver's behavior changes depending on whether supply matches demand.*
 
 ## 7. Network flow, more generally
 

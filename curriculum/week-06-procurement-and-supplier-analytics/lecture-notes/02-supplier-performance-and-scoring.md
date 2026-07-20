@@ -151,6 +151,15 @@ Running this on the three CMT suppliers:
 
 Northstar Apparel Mfg tops every single component — cheapest, cleanest, always on time, zero lead-time variance — and the weighted score reflects that with a clean sweep. Andes comes in a distant second (excellent quality keeps them afloat, but the highest price and worst-tied OTD hurt), and Pacific Rim finishes last, dragged down by the worst defect rate and worst lead-time variability in the group on top of a below-Andes-but-not-cheap price.
 
+```mermaid
+flowchart LR
+    A["Order and receipt data"] --> B["Four raw metrics cost quality OTD lead time"]
+    B --> C["Min max normalize to 0-100"]
+    C --> D["Apply component weights"]
+    D --> E["Weighted score"]
+```
+*Raw order and receipt data flows through four metrics, normalization, and weighting to produce one comparable supplier score.*
+
 ## 5. The trap this scorecard is hiding: sample size
 
 Look back at the raw data one more time. Northstar Apparel Mfg's perfect score is built from **two purchase orders**. Andes and Pacific Rim each contributed **three**. A supplier who ships two-for-two on time isn't necessarily more reliable than one who ships eight-for-ten — they might just not have had a bad day *yet*. Two data points can't distinguish "genuinely excellent process" from "got lucky twice." This is the single most common mistake in real-world scorecarding: treating every supplier's score as equally statistically confident, when the underlying sample sizes might differ by 5–10x.

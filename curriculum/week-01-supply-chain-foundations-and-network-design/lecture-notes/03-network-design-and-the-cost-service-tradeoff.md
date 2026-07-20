@@ -32,6 +32,25 @@ Once you've decided you need at least one DC layer, the next question is: **one 
 
 Neither column wins in general. A company selling heavy, low-margin, slow-moving industrial parts to a handful of big customers usually centralizes (freight and holding cost dominate). A company selling to consumers nationwide with next-day delivery expectations usually distributes (speed to customer dominates, and the up-charge for guaranteed fast shipping justifies the extra facility cost). Most real networks land somewhere in between — a "hybrid" with one national DC for slow movers and several forward regional nodes stocking the fast-moving, popular SKUs.
 
+```mermaid
+flowchart TD
+  subgraph Centralized["Centralized: one DC"]
+    F1["Factory"] --> DC1["National DC"]
+    DC1 --> R1["Customer North"]
+    DC1 --> R2["Customer South"]
+    DC1 --> R3["Customer East"]
+  end
+  subgraph Distributed["Distributed: regional DCs"]
+    F2["Factory"] --> DCN["North DC"]
+    F2 --> DCS["South DC"]
+    F2 --> DCE["East DC"]
+    DCN --> C1["Customer North"]
+    DCS --> C2["Customer South"]
+    DCE --> C3["Customer East"]
+  end
+```
+*One pooled DC versus several regional DCs — the core centralize-or-distribute trade-off.*
+
 ## 3. The square root law of inventory — why centralizing pools risk
 
 Here's *why* centralizing reduces total safety stock, with the actual (simplified) relationship. If a company splits its safety stock across `n` identical, independent locations instead of holding it all in one, the *total* safety stock needed scales roughly with `√n`, not `n`:
@@ -91,6 +110,15 @@ Total landed cost = Inventory holding cost
                    + Facility fixed cost (lease, labor, systems)
                    + Cost of service failures (lost sales, expedite fees, customer churn from stockouts)
 ```
+
+```mermaid
+flowchart TD
+  A["Inventory holding cost"] --> T["Total landed cost"]
+  B["Transportation cost inbound and outbound"] --> T
+  C["Facility fixed cost"] --> T
+  D["Cost of service failures"] --> T
+```
+*Four independent cost components combine into one total landed cost figure for comparing network designs.*
 
 A network that looks cheaper on freight alone but forces more safety stock (Section 3) or racks up stockout losses (a real, if harder-to-measure, cost) can easily be more expensive overall. **Worked comparison**, Crunch Gear choosing between 1 national DC and 4 regional DCs, annualized:
 

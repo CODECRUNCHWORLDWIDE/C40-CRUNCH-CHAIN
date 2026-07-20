@@ -67,6 +67,17 @@ Reviewing only every 14 days instead of continuously costs Crunch Gear about **3
 | Multiple SKUs consolidated onto one periodic order (freight minimum, joint replenishment) | **(R,S)**, reviewed together |
 | A single, one-time, perishable, or use-it-or-lose-it decision | **Newsvendor** (next section — not a "reorder" policy at all) |
 
+```mermaid
+flowchart TD
+  A["How is inventory reviewed"] --> B["Continuous real time tracking"]
+  A --> C["Fixed review calendar"]
+  A --> D["One time perishable decision"]
+  B --> B1["s Q policy"]
+  C --> C1["R S policy"]
+  D --> D1["Newsvendor model"]
+```
+*Which reorder policy fits which review cadence and demand situation.*
+
 ## 5. The newsvendor problem — when there is no next cycle
 
 Everything so far assumed a **repeating** cycle: order, sell down, reorder, forever. Some decisions don't get that luxury. A limited-edition product drop, a seasonal item ordered once before the season, produce with a shelf life shorter than the reorder cycle, an event T-shirt — you place **one order**, demand happens **once**, and whatever you didn't sell is a loss (markdown, donation, disposal) while whatever demand you didn't cover is a **permanently** lost sale, not a backorder you'll fill next week. This is the **newsvendor problem** (named for a news-stand vendor deciding how many copies of tomorrow's paper to buy, knowing unsold copies are worthless the next day).

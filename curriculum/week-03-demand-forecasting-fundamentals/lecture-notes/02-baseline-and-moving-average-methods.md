@@ -107,6 +107,16 @@ ORDER BY week_start;
 
 Read the frame clause carefully: `ROWS BETWEEN 4 PRECEDING AND 1 PRECEDING` — four rows *before* the current one, stopping one row before it. That's deliberate. If you wrote `ROWS BETWEEN 3 PRECEDING AND CURRENT ROW`, you'd be averaging in the very value you're trying to forecast — a classic **data-leakage bug** that makes a backtest look far better than the method will actually perform live, because in production you obviously don't have this week's actual yet when you're forecasting this week.
 
+```mermaid
+flowchart LR
+  A["y at t-4"] --> E["Average of 4 prior weeks"]
+  B["y at t-3"] --> E
+  C["y at t-2"] --> E
+  D["y at t-1"] --> E
+  E --> F["MA4 forecast for week t"]
+```
+*The window always stops one row before the current week, so the forecast never sees the actual it is predicting.*
+
 **The core weakness of moving average: it always lags a trend.** A `k`-period moving average is mathematically guaranteed to lag a steadily rising series by roughly `(k+1)/2` periods worth of trend. The bigger your window, the smoother your forecast, but also the further behind reality it runs during any sustained climb or drop.
 
 ## 5. Worked comparison: all three, on the real ramp

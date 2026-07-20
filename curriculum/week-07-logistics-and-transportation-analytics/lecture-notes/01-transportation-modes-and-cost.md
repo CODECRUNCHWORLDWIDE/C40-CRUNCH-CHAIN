@@ -132,6 +132,17 @@ Savings by combining: $441.00 - $309.60 = $131.40 (about 30%)
 
 Combining orders that are going to the same place in the same week, whenever the shipping schedule allows it, is one of the cheapest wins in transportation — no negotiation with a carrier required, just better order-batching logic. This is exactly the kind of "obvious in hindsight, invisible in a spreadsheet, obvious in a GROUP BY" pattern SQL is built to surface — which is why we never do this analysis in Excel.
 
+```mermaid
+flowchart TD
+  A["Two orders same destination same week"] --> B["Compute cost shipped separately"]
+  A --> C["Compute cost shipped combined"]
+  B --> D{"Combined cost lower than separate cost"}
+  C --> D
+  D -->|"Yes"| E["Combine into one shipment"]
+  D -->|"No"| F["Ship separately"]
+```
+*Deciding whether two same-week orders to the same city should ship separately or get combined onto one truck.*
+
 ## 5. Putting it together: reading a lane's mode mix
 
 ```sql

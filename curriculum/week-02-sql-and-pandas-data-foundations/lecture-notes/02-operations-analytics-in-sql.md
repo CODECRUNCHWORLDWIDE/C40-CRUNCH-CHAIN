@@ -41,6 +41,15 @@ WHERE o.order_id = 3;
 
 This returns **two rows** for order 3, not one — because order 3 shipped in two separate shipments (Exercise 1's seed deliberately split it: SKU-3 shipped complete on March 8th, SKU-7 shipped short and late on March 10th). That's correct here, because you asked for shipment-level detail. But it's a trap the moment you forget it: if you then wrote `SELECT order_id, SUM(qty_ordered) FROM (that join) GROUP BY order_id`, you'd double-count `qty_ordered` for order 3, because the join duplicated its `order_lines` rows once per matching shipment. This is called a **fan-out** — a join that legitimately multiplies rows, and it silently wrecks any aggregate computed *after* the join instead of *before* it. The fix, always: aggregate the "one" side of a one-to-many join **before** joining it to the "many" side, or aggregate carefully with `COUNT(DISTINCT ...)` / a pre-aggregated subquery. Exercise 2 makes you build exactly this correctly.
 
+```mermaid
+flowchart LR
+  A["order line: order 3, SKU-7"] --> B["shipment line: shipped Mar 8"]
+  A --> C["shipment line: shipped Mar 10"]
+  B --> D["joined row 1"]
+  C --> E["joined row 2"]
+```
+*One order line fans out into two joined rows because it matched two shipment lines.*
+
 ## 2. `GROUP BY` aggregation: rolling rows into answers
 
 **Question: what's total unit fill rate, and how does it break out by region?**
@@ -143,6 +152,19 @@ ORDER BY sku_id, site_id, txn_date;
 ```
 
 `PARTITION BY` to a window function is what `GROUP BY` is to an aggregate — it resets the calculation at each new group — except the individual rows survive instead of collapsing. This one query produces four independent running balances (SKU-1 at Newark, SKU-1 at Reno, SKU-3 at Atlanta, SKU-3 at Columbus) side by side. Exercise 3 has you run this and use it to spot which site/SKU combination is closest to running out.
+
+```mermaid
+flowchart TD
+  A["inventory_transactions"] --> B["SKU-1 at Newark"]
+  A --> C["SKU-1 at Reno"]
+  A --> D["SKU-3 at Atlanta"]
+  A --> E["SKU-3 at Columbus"]
+  B --> B1["running balance for this partition"]
+  C --> C1["running balance for this partition"]
+  D --> D1["running balance for this partition"]
+  E --> E1["running balance for this partition"]
+```
+*PARTITION BY splits one query into independent running balances, one per SKU-site pair.*
 
 ## 4. Window functions, part 2: lead-time percentiles
 

@@ -12,6 +12,20 @@ Holt-Winters (formally: **triple exponential smoothing**, after Charles Holt and
 
 Each has its own smoothing weight — `alpha` for level, `beta` for trend, `gamma` for season — each between 0 and 1. A weight near 1 means "trust the newest observation almost completely, forget the past fast." A weight near 0 means "barely update this component — the historical estimate is already good and new noise shouldn't move it."
 
+```mermaid
+flowchart TD
+  Y["New observation yt"] --> UL["Update Level"]
+  Sprev["Season from last cycle"] --> UL
+  Tprev["Trend carried forward"] --> UL
+  UL --> UT["Update Trend"]
+  UL --> US["Update Season"]
+  UL --> F["Forecast yhat t plus h"]
+  UT --> F
+  US --> F
+```
+
+*Level, trend, and season each update from the other two, then combine into the forecast.*
+
 **Additive form** (use when the seasonal swing stays roughly the same absolute size regardless of the trend level — our jacket data, and most retail demand at moderate growth rates):
 
 ```
@@ -133,5 +147,19 @@ Report a range (`[lower, upper]`) alongside the point forecast whenever the fore
 - **Demand driven mainly by an external cause you can name** — price, promotion, a competitor stockout. Holt-Winters only ever looks at the series' own past values; if promotions move more volume than the calendar does, you need Lecture 2's regression approach, which can take a promo flag as an explicit input.
 - **Intermittent demand** (mostly zeros, occasional spikes) — the level/trend/season decomposition assumes a roughly continuous series. A SKU with 65% zero-weeks needs Croston's method (Challenge 1), not Holt-Winters.
 - **A hierarchy of series that must sum correctly** — fitting Holt-Winters independently per SKU and per region gives you numbers that, added up, usually don't match a Holt-Winters fit on the total. That's Challenge 2's problem, not this lecture's.
+
+```mermaid
+flowchart TD
+  Q1["Fewer than two seasonal cycles of history"] -->|Yes| No1["Do not use Holt-Winters"]
+  Q1 -->|No| Q2["Demand driven by a named external cause"]
+  Q2 -->|Yes| No2["Use causal regression instead"]
+  Q2 -->|No| Q3["Mostly zero weeks intermittent demand"]
+  Q3 -->|Yes| No3["Use Crostons method"]
+  Q3 -->|No| Q4["Series must sum across a hierarchy"]
+  Q4 -->|Yes| No4["Needs hierarchical reconciliation"]
+  Q4 -->|No| Yes1["Holt-Winters is appropriate"]
+```
+
+*Working through the four disqualifiers before trusting a Holt-Winters fit.*
 
 Next: [Lecture 2 — Causal & Feature-Based Forecasting](./02-causal-and-feature-based-forecasting.md), where price and promotions — not just the calendar — become forecast inputs.

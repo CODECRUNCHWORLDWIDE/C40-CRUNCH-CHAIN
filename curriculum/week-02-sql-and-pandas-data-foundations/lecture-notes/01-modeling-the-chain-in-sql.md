@@ -87,6 +87,18 @@ Walk through why this shape, and not something simpler, is necessary:
 - **Why the `one_origin_only` `CHECK`?** Two nullable columns alone would silently allow a lane with both origins filled in, or neither — nonsense states no supply chain actually has. The `CHECK` constraint is an **XOR pattern**: exactly one of the two columns must be non-`NULL`. Try to insert a lane with both origins set, or both `NULL`, and Postgres rejects the row at insert time. This is the constraint doing real work: it makes an entire category of bad data — a lane that comes from nowhere, or from two places at once — physically impossible to store, instead of a bug you find three weeks later in a report.
 - **Why is `dest_site_id` always a plain, single, `NOT NULL` column?** Because a lane's *destination* in this network is always a Crunch Gear site — you never ship product *to* a supplier. Only the origin needs the either/or shape.
 
+```mermaid
+flowchart TD
+  A["New lane insert"] --> B{"origin supplier id set"}
+  B -->|yes| C{"origin site id set"}
+  B -->|no| D{"origin site id set"}
+  C -->|yes| E["Reject - both origins set"]
+  C -->|no| F["Accept - supplier origin"]
+  D -->|yes| G["Accept - site origin"]
+  D -->|no| H["Reject - no origin set"]
+```
+*The one_origin_only CHECK enforces exactly one origin, never both or neither.*
+
 ## 5. SKUs, orders, and order lines
 
 ```sql
@@ -185,6 +197,23 @@ CREATE TABLE inventory_transactions ( ... ); -- Section 7  (sku_id -> skus, site
 ```
 
 Trace one path through it to see the whole chain in one sentence: a **supplier** ships fabric over a **lane** to a **plant** (a `site`), which produces a **SKU**; a customer places an **order**, which has one or more **order lines**, each for one SKU; a **shipment** moves over a **lane** from the order's source DC (a `site`), and its **shipment lines** record how much of each order line actually went out — separately from how much was originally ordered, which is exactly the gap that makes fill rate and OTIF meaningful numbers instead of trivially 100%.
+
+```mermaid
+erDiagram
+  SUPPLIERS ||--o{ LANES : origin-of
+  SITES ||--o{ LANES : destination-of
+  SITES ||--o{ SKUS : produces
+  SITES ||--o{ ORDERS : ships-from
+  ORDERS ||--o{ ORDER_LINES : contains
+  SKUS ||--o{ ORDER_LINES : ordered-as
+  ORDERS ||--o{ SHIPMENTS : fulfilled-by
+  LANES ||--o{ SHIPMENTS : routes
+  SHIPMENTS ||--o{ SHIPMENT_LINES : contains
+  ORDER_LINES ||--o{ SHIPMENT_LINES : shipped-as
+  SKUS ||--o{ INVENTORY_TRANSACTIONS : tracked-in
+  SITES ||--o{ INVENTORY_TRANSACTIONS : located-at
+```
+*The nine tables and how a supplier-to-customer flow connects through them.*
 
 Every foreign key here is also a promise: `order_lines.sku_id REFERENCES skus(sku_id)` means Postgres will refuse to insert an order line for a SKU that doesn't exist, full stop, no exceptions, no silent `#REF!` the way a broken spreadsheet formula fails quietly. That promise is the entire reason this schema — not a folder of CSVs, not a workbook — is what makes the database a *system of record* instead of just *a place data happens to sit*.
 

@@ -18,6 +18,15 @@ Every strong operations recommendation memo has the same five parts, in the same
 4. **The trade-off** — what you're giving up, or what could go wrong, stated *before* they ask. This is the sentence that builds trust, because it's the one a weak analyst omits.
 5. **Next steps and risks** — what happens after "yes," and what you're watching for.
 
+```mermaid
+flowchart TD
+  A["Headline - one sentence one number"] --> B["The ask - what to approve, with a date"]
+  B --> C["The evidence - 2 to 3 numbers or one chart"]
+  C --> D["The trade off - stated before they ask"]
+  D --> E["Next steps and risks"]
+```
+*The five parts of an executive one-pager, always in this order.*
+
 ### Worked example — the capstone's memo
 
 ```markdown

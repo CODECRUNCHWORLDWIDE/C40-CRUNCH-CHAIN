@@ -8,6 +8,20 @@ Every real optimization project starts the same way, and it is not with a solver
 
 That's two plants, three DCs, four regions, six SKUs — a genuinely multi-echelon network, and small enough that you can hold the whole thing in your head while you check the solver's work.
 
+```mermaid
+flowchart LR
+  HPH["Hai Phong Mill"] --> AUS["Austin East DC"]
+  HPH --> MEM["Memphis DC"]
+  HPH --> REN["Reno DC"]
+  PCS["Piedmont Cut and Sew"] --> AUS
+  PCS --> MEM
+  PCS --> REN
+  AUS --> REG["4 demand regions - NE SE MW WE"]
+  MEM --> REG
+  REN --> REG
+```
+*Two plants feed three DCs, which in turn feed the four demand regions - the multi-echelon network this capstone optimizes.*
+
 ## 2. The scoping document
 
 Write this down before touching SQL. Here is the version for this capstone — copy the shape, not the specifics, into your own mini-project scoping doc.

@@ -154,6 +154,14 @@ Put Sections 2–5 together and you have the entire pattern this course uses fro
 2. **Model** in pandas — whatever SQL genuinely can't: statistics, ML, charts, quick reshaping.
 3. **Write back** whatever's worth keeping (`to_sql`), in a long/tidy shape, so it's queryable by the next person (or the next week of you) without reopening a notebook.
 
+```mermaid
+flowchart LR
+  A["Postgres: query with read_sql"] --> B["pandas: model and analyze"]
+  B --> C["Postgres: write back with to_sql"]
+  C --> A
+```
+*The read-model-write loop this course repeats every week — SQL stays the system of record.*
+
 At no point does a `.xlsx` file enter this loop, and now you can say precisely why, instead of just citing the syllabus: a spreadsheet can't enforce the constraints from Lecture 1, can't be queried the way Lecture 2's joins and window functions require, and — this lecture's addition — even the *analysis* step that legitimately leaves SQL has a database-shaped destination waiting for it on the other side. pandas is the workbench between two visits to the same system of record, never a second, competing one.
 
 **Next:** run [Exercise 2](../exercises/exercise-02-join-orders-to-shipments.md) and [Exercise 3](../exercises/exercise-03-rolling-inventory-with-windows.md) to build Lecture 2's queries yourself, then this lecture's read/write loop.

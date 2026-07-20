@@ -19,6 +19,19 @@ batched_trips  = number of DISTINCT (slot) locations touched by the wave
 
 Batching only helps when orders in the same wave overlap in what they need — which, for any warehouse whose top SKUs are ordered constantly (exactly what Lecture 2's ABC analysis showed you), is the normal case, not the exception.
 
+```mermaid
+flowchart LR
+  subgraph Discrete["Discrete picking"]
+    O1["Order 1"] --> T1["Trip to SKU slot"]
+    O2["Order 2"] --> T2["Trip to SKU slot"]
+  end
+  subgraph Batched["Batch picking - one wave"]
+    W1["Order 1"] --> TW["One trip to SKU slot"]
+    W2["Order 2"] --> TW
+  end
+```
+*Two orders needing the same SKU cost two trips discrete but one trip batched.*
+
 ## 2. A real day, both ways
 
 Take **June 4, 2025** from this week's `pick_lines` table — a representative busy day at Austin East DC:

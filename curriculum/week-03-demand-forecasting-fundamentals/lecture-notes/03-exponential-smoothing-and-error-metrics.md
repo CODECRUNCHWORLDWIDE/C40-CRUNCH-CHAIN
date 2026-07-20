@@ -52,6 +52,17 @@ Forecast: ŷ_{t+1} = L_t + T_t
 
 Two smoothing parameters now: `α` controls how fast the level adapts (same idea as SES), and `β` (beta) controls how fast the *trend estimate itself* adapts. The forecast is level **plus** trend — so unlike SES, Holt's method actually projects forward along the direction the series has recently been moving, instead of aiming at where it already was.
 
+```mermaid
+flowchart LR
+  L0["Prior level and prior trend"] --> L1["New level from actual and prior level plus trend"]
+  L0 --> T1["New trend from change in level and prior trend"]
+  L1 --> F["Forecast equals new level plus new trend"]
+  T1 --> F
+  L1 -.->|feeds next period| L0
+  T1 -.->|feeds next period| L0
+```
+*Holt's method updates level and trend each period, then feeds both forward into the next update.*
+
 ### Holt's method on the same ramp
 
 With α=0.3, β=0.2 (seeded on the first 4 weeks — level from the first observation, trend from the average of the first three differences):
@@ -110,6 +121,17 @@ Bias = (1/n) · Σ (actual_i − forecast_i)
 ```
 
 This is the one metric above that does **not** take an absolute value. Positive bias means you are **systematically under-forecasting** (actuals keep coming in above the forecast — SES's problem all through this lecture). Negative bias means you are **systematically over-forecasting**. A bias near zero doesn't mean your forecast is accurate — it just means your over- and under-shoots are canceling out, which is why bias is always reported *alongside* MAE/RMSE, never instead of them. Operationally, bias is often the single most important number to a planner: consistent under-forecasting quietly drives stockouts and firefighting; consistent over-forecasting quietly drives excess inventory and markdowns. Two forecasts can have identical MAE and wildly different — and wildly different-consequence — bias.
+
+```mermaid
+flowchart TD
+  A["Choosing an error metric"] --> B{"Comparing across SKUs of different volume?"}
+  B -->|Yes| C["Use MAPE - watch for zero actuals"]
+  B -->|No| D{"Do large rare misses cost more?"}
+  D -->|Yes| E["Use RMSE"]
+  D -->|No| F["Use MAE"]
+  A --> G["Always also check Bias for systematic under or over forecasting"]
+```
+*No single metric tells the whole story - pick based on what a planner actually cares about, then check bias regardless.*
 
 ## 4. The master comparison table
 

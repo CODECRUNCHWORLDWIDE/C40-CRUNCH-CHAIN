@@ -16,6 +16,15 @@ A purchase order's unit price captures exactly one thing: what you pay the suppl
 TCO per unit = unit price + freight per unit + quality cost per unit + carrying cost per unit
 ```
 
+```mermaid
+flowchart LR
+    A["Unit price"] --> E["TCO per unit"]
+    B["Freight per unit"] --> E
+    C["Quality cost per unit"] --> E
+    D["Carrying cost per unit"] --> E
+```
+*Total cost of ownership adds three hidden costs on top of unit price.*
+
 We build this for the same two CMT suppliers Lecture 2 scored: **Andes Stitch Works** and **Pacific Rim Garments**.
 
 ## 2. Freight and quality cost per unit
@@ -52,6 +61,14 @@ Already, Pacific Rim's per-unit quality cost is nearly 4x Andes's — small in a
 ## 3. Lead-time risk → safety stock → carrying cost (the hidden one)
 
 This is the TCO component almost nobody computes informally, and it's a direct callback to Week 5's inventory math. A supplier who is *consistently* 30 days out is easy to plan around — you order 30 days ahead, every time, and hold minimal buffer. A supplier who *averages* 30 days but swings between 20 and 45 forces you to hold extra **safety stock** just to protect against the unpredictable slow shipments, even though the *average* looks fine.
+
+```mermaid
+flowchart LR
+    A["Lead time variability"] --> B["Extra safety stock needed"]
+    B --> C["Carrying cost per unit"]
+    C --> D["Total cost of ownership"]
+```
+*Lead-time variability cascades into extra safety stock and carrying cost, even when the average lead time looks fine.*
 
 The safety-stock formula for lead-time variability (holding demand roughly constant, which is reasonable at Crunch Gear's scale for CMT-sourced jackets):
 

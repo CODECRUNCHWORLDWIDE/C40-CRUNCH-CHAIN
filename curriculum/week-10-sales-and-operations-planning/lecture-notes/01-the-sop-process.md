@@ -26,6 +26,16 @@ Left alone, these four numbers **drift apart every single month**, because each 
 
 Each stage has a distinct owner, a distinct input, and a distinct output. Skipping a stage — going straight from "Sales wants X" to "Ops, make X happen" — is exactly how the drift in Section 1 gets built into the plan instead of caught by it.
 
+```mermaid
+flowchart LR
+  A["Demand review"] --> B["Supply review"]
+  B --> C["Reconciliation"]
+  C --> D["Executive sign-off"]
+  D -->|Rework requested| A
+```
+
+*The monthly S&OP cycle — four stages in order, with leadership able to send the plan back for rework instead of approving it.*
+
 ### Stage 1 — Demand review
 
 **Owner:** Demand Planning, with Sales/Commercial as a required input, not a decision-maker who overrides on their own. **Input:** a statistical forecast (built the way Weeks 3–4 of this course taught — baselines, seasonality, trended history) *and* a sales/field forecast for the same period. **Output:** one **consensus forecast** per product family per month — the number the rest of the cycle runs on.

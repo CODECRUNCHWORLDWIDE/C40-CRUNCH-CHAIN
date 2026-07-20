@@ -12,6 +12,16 @@ RECEIVING → PUTAWAY → STORAGE → PICKING → PACKING → SHIPPING
 
 Six steps, one direction. Product enters at receiving and exits at shipping; everything in between is the warehouse "earning its keep" by making picking fast and cheap when the order finally comes in.
 
+```mermaid
+flowchart LR
+  A["Receiving"] --> B["Putaway"]
+  B --> C["Storage"]
+  C --> D["Picking"]
+  D --> E["Packing"]
+  E --> F["Shipping"]
+```
+*The six-step receive-to-ship flow every unit of inventory passes through.*
+
 | Step | What happens | Who touches it | Primary cost driver |
 |------|--------------|-----------------|----------------------|
 | **Receiving** | Inbound trucks are unloaded, cartons are counted, checked against the purchase order, and staged | Receiving dock crew | Dock-door time, count accuracy |

@@ -105,6 +105,15 @@ ORDER BY ops_date;
 
 **Step 5 — Route the exception.** A flagged row needs somewhere to go — a table of open exceptions, a message to a Slack channel, an email — and, critically, a way to mark it resolved so the same anomaly doesn't re-alert every day it persists. This is the "exception management" half of Lecture 3.
 
+```mermaid
+flowchart TD
+  A["Step 1 Ingest"] --> B["Step 2 Compute rolling baseline"]
+  B --> C["Step 3 Score the deviation"]
+  C --> D["Step 4 Threshold and alert"]
+  D --> E["Step 5 Route the exception"]
+```
+*The five-step shape of a control-tower pipeline, from raw table to a routed, resolvable exception.*
+
 ## 4. Materialized views: making the pipeline fast enough to run daily
 
 Running a window-function query like the ones above over 180 rows is instant. Running the equivalent over years of daily data across a full DC network is not something you want recomputing from scratch on every dashboard refresh. PostgreSQL's answer is a **materialized view** — a query whose result is stored like a table and refreshed on a schedule:

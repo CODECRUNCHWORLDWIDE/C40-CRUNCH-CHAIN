@@ -56,6 +56,17 @@ print(round(dist(0, 1), 2))   # depot -> Round Rock Trailhead Outfitters
 
 **Nearest-neighbor (NN)** is the simplest routing heuristic there is: start at the depot, repeatedly go to the *closest unvisited stop*, and return to the depot once everything's visited.
 
+```mermaid
+flowchart TD
+  A["Start at depot"] --> B["Find nearest unvisited stop"]
+  B --> C["Travel to that stop"]
+  C --> D["Mark stop visited"]
+  D --> E{"Any unvisited stops left"}
+  E -->|"Yes"| B
+  E -->|"No"| F["Return to depot"]
+```
+*The nearest-neighbor heuristic repeatedly hops to the closest unvisited stop until every stop is visited, then closes the loop back to the depot.*
+
 ```python
 def nearest_neighbor_route(stop_ids, start=0):
     unvisited = set(stop_ids) - {start}

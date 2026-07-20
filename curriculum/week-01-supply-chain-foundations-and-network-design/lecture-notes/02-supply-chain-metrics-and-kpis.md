@@ -131,6 +131,15 @@ C2C = 60.8 + 30.0 − 30.0 = 60.8 days
 
 Crunch Gear's cash is tied up for about **61 days** on average — it pays for materials, holds inventory, ships and invoices, and collects payment, all before that cash cycles back to fund the next round of production. A **shorter** C2C means less working capital needed to run the same size of business (better for cash flow and growth funding); a company can shrink it by holding less inventory (lower DIO), collecting from customers faster (lower DSO), or negotiating longer payment terms with its own suppliers (higher DPO) — three very different levers, and a good operator knows which one they're actually pulling.
 
+```mermaid
+flowchart LR
+  A["Pay suppliers cash goes out"] --> B["Hold inventory DIO days"]
+  B --> C["Ship and sell to customer"]
+  C --> D["Collect cash DSO days"]
+  D --> E["Cash cycle completes C2C days"]
+```
+*Cash goes out to suppliers, sits tied up in inventory, then returns once the customer pays.*
+
 ## 6. What each KPI actually points to
 
 | KPI | What it measures | The lever it points to when it's bad |

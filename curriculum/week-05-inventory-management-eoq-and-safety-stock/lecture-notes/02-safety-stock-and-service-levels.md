@@ -40,6 +40,15 @@ where `d̄` is mean daily demand and `L` is mean lead time in days. Read the two
 
 **In most real operations, the second term dominates.** A supplier who's late by 3 days on a fast-moving SKU exposes you to 3 extra days of full-rate demand — often a bigger hit than day-to-day demand noise. This is exactly why supplier reliability (Week 6) matters as much as demand forecasting (Weeks 3–4) to how much safety stock you end up carrying.
 
+```mermaid
+flowchart LR
+  A["Demand variability sigma d"] --> C["Combined DLT std dev sigma DLT"]
+  B["Lead time variability sigma L"] --> C
+  C --> D["Safety stock equals z times sigma DLT"]
+  D --> E["Reorder point ROP"]
+```
+*How two independent sources of uncertainty combine into safety stock and the reorder point.*
+
 ## 3. Sizing safety stock to a z-target
 
 Assume demand during lead time is approximately normal (a reasonable assumption for most retail SKUs with `d̄` not too close to zero; for very slow movers, use the newsvendor approach from Lecture 3 instead). Then safety stock is simply:

@@ -12,6 +12,15 @@ Individually, you already know how to do every piece of this:
 
 The part nobody teaches you in a single-topic lecture is that **these three things depend on each other in a specific order, and getting the order wrong produces a plausible-looking, wrong answer.** Forecast demand first — you need a number to plan against. Then size inventory policy against that forecast's *error*, not against the forecast's *point estimate* — safety stock exists specifically to absorb the part the forecast got wrong. Only then can you optimize the network, because the LP needs to know how much volume each DC will actually be asked to carry (forecast demand *plus* the safety stock cushion), not just the forecast's bare mean. Reverse this order — optimize the network against the forecast alone, then bolt inventory policy on afterward — and you'll under-capacity every DC by exactly the amount of safety stock you forgot to plan for.
 
+```mermaid
+flowchart TD
+  F["Stage 1 - forecast demand"] --> I["Stage 2 - safety stock from forecast error"]
+  I --> L["Stage 3 - solve network LP with demand plus safety stock"]
+  F -.skip inventory stage.-> L
+  L -.produces.-> W["Under capacitized DCs - wrong answer"]
+```
+*Forecast, then inventory, then network - skipping the middle stage silently undersizes every DC.*
+
 ## 2. Stage 1 — Forecast demand per SKU-region
 
 Twenty-four SKU-region pairs (4 regions × 6 SKUs), twenty-four months of history each. A seasonal-naive forecast — "next month's forecast for this calendar month is this SKU-region's historical average for that calendar month" — is simple, auditable, and (per Week 3) a mandatory baseline before reaching for anything fancier. For a capstone, auditable beats clever.

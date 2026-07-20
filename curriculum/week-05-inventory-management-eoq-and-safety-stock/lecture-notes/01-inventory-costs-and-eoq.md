@@ -35,6 +35,17 @@ Ordering cost is why you don't just order one unit at a time the moment you need
 
 The cost of *not having* a unit when demand shows up: a lost sale and its margin, a backorder and the cost of expediting it, or — the hardest to put a number on — the goodwill and reputation damage of an empty shelf or a "sorry, backordered" email. Shortage cost is what safety stock exists to prevent, and it's the subject of Lecture 2. For this lecture, we assume shortages don't happen (the classic EOQ assumption) so we can isolate the trade-off between holding and ordering cost first.
 
+```mermaid
+flowchart TD
+  A["Inventory cost decision"] --> B["Holding cost"]
+  A --> C["Ordering cost"]
+  A --> D["Shortage cost"]
+  B --> B1["Capital storage insurance obsolescence"]
+  C --> C1["Fixed cost per purchase order"]
+  D --> D1["Lost sales and backorders"]
+```
+*The three cost buckets every inventory decision has to balance.*
+
 ## 2. Setting up the total-cost equation
 
 Picture ordering the **same fixed quantity `Q`** every time, at a **constant, known annual demand `D`**. Inventory looks like a sawtooth: it starts at `Q` right after a delivery, drains linearly to zero at rate `D`, and gets refilled to `Q` again.

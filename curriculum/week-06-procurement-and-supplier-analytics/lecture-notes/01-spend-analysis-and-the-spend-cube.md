@@ -8,6 +8,19 @@ Ask a VP of Procurement "how much do we spend, and with whom?" and you'd expect 
 
 A "cube" is a mental model, not a special database object: it's spend data you can slice along several independent **dimensions** at once — typically **category** (what was bought), **supplier** (who it was bought from), **business unit** (who bought it), and **time** (when). The "cube" metaphor comes from picturing those dimensions as the edges of a 3D or 4D box; in practice you build it as one clean, denormalized table and slice it with `GROUP BY`.
 
+```mermaid
+flowchart TD
+    A["Purchase order line"] --> B["Category"]
+    A --> C["Supplier"]
+    A --> D["Business unit"]
+    A --> E["Time"]
+    B --> F["Spend cube"]
+    C --> F
+    D --> F
+    E --> F
+```
+*Four independent dimensions, captured at the transaction level, combine into the spend cube.*
+
 Our seed table, `purchase_orders`, is already shaped correctly — one row per PO line, with a category, supplier, business unit, and date already attached. This is the single most important habit in spend analysis: **capture the dimensions at the transaction level**, not after the fact. If your ERP lets a buyer create a PO with no category code, someone will, and your spend cube will have an "Uncategorized" slice that quietly swallows 20% of spend. (Real spend-analytics vendors spend most of their effort on **spend classification** — using rules or ML to backfill category codes onto messy historical AP data that was never tagged at time of purchase. You're spared that here because the seed data was tagged correctly from day one — treat that as the standard to hold your own systems to, not the norm you should expect.)
 
 ## 2. The first cut: total spend, no slicing
@@ -183,6 +196,15 @@ ORDER BY spend DESC;
 ```
 
 This is the pattern behind every "drill-down" you've seen in a BI dashboard — start broad (`GROUP BY category`), then add a `WHERE` filter and another `GROUP BY` column to zoom in. You'll build the full multi-dimensional cube — category × supplier × business unit × month, all in one result set using `GROUPING SETS` or `ROLLUP` — in Exercise 1.
+
+```mermaid
+flowchart LR
+    A["Group by category"] --> B["Add where filter"]
+    B --> C["Group by category and supplier"]
+    C --> D["Add another group by column"]
+    D --> E["Group by category supplier and business unit"]
+```
+*Drilling down: start broad, filter, then add grouping columns to zoom in.*
 
 ## 8. Check yourself
 

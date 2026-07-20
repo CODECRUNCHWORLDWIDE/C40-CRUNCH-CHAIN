@@ -35,6 +35,16 @@ Notice this taxonomy is symmetric: **supply-side** risk (suppliers, facilities, 
 
 A **single point of failure** is any node or lane whose loss stops (or badly degrades) a function the network has no other way to perform. The test is simple and worth internalizing as a habit, not a formula: **"if this node went to zero tomorrow, is there a Plan B already in place, or would we be improvising?"**
 
+```mermaid
+flowchart TD
+  A["Node fails today"] --> B{"Plan B already in place"}
+  B -->|Yes| C["Not a SPOF risk driver"]
+  B -->|No| D["Single point of failure"]
+  D --> E["Track likelihood and impact"]
+  E --> F["Decide accept reduce or transfer"]
+```
+*The SPOF test: a missing Plan B turns a node failure into a tracked risk that needs a decision.*
+
 Run that test against Crunch Gear's `network_risk_register`:
 
 ```sql
@@ -107,6 +117,24 @@ The matrix is a **prioritization tool, not a prediction** — a likelihood of "3
 ## 6. Four resilience levers
 
 Once a risk is identified as worth mitigating, there are exactly four levers, and picking the right one (or combination) is the actual skill:
+
+```mermaid
+mindmap
+  root((Resilience levers))
+    Buffers
+      Safety stock
+      Capacity slack
+    Redundancy
+      Second supplier
+      Backup facility
+    Flexibility
+      Modular design
+      Interchangeable capacity
+    Visibility
+      Faster detection
+      Faster decisions
+```
+*The four levers available to reduce a risk's expected cost, once it's worth mitigating.*
 
 ### Buffers (safety stock, capacity slack, time)
 The lever you already know from [Week 5](../../week-05-inventory-management-eoq-and-safety-stock/) — hold enough inventory, capacity, or schedule slack to absorb a disruption without customers noticing. Cheapest to implement, but it's a *cost that runs every single day* whether or not the disruption ever happens — you're paying the carrying cost of the buffer 365 days a year to protect against an event that might strike once every 3 years.

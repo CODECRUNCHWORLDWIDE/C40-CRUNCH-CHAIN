@@ -39,6 +39,15 @@ Tier-2 supplier      Tier-1 supplier      Plant           DC              Retail
 
 Each arrow is a **lane** — a physical transportation link with its own cost, lead time, and mode (ocean freight, truck, air, parcel). Every echelon a product crosses adds lead time, adds a handling cost, and usually adds an inventory holding point — somewhere product sits and waits, which is money tied up doing nothing until it sells. **Echelon count is a design choice, not a law of nature** — Lecture 3 goes deep on how many echelons a network actually needs.
 
+```mermaid
+flowchart LR
+  A["Fabric mill Tier-2 supplier"] --> B["Hardware maker Tier-1 supplier"]
+  B --> C["Garment factory Plant"]
+  C --> D["Memphis DC"]
+  D --> E["Retailer or DTC customer"]
+```
+*Crunch Gear's jacket crosses five echelons, each arrow a lane with its own cost and lead time.*
+
 A subtlety worth internalizing now: "supplier" and "customer" are relative to where you're standing. The garment factory is Crunch Gear's supplier, but the hardware maker is *the factory's* supplier. Multi-tier maps (showing your supplier's suppliers) matter enormously for risk — Week 11 comes back to this when a single sub-tier factory fire shuts down an entire product line nobody thought was fragile.
 
 ## 4. The three flows
@@ -100,6 +109,15 @@ A quick illustration. Suppose real consumer demand for a jacket is a steady 100 
 | Mill | Factory orders: 140 → 180 (+29%) | Ramps raw material production sharply — the largest swing in the chain, from a 5% wobble in real demand |
 
 Nobody in that chain lied or made a mistake — every single order was a locally reasonable decision. But because each node only sees the order in front of it (not the real signal three tiers away) and each adds its own margin of safety, a 5% consumer wobble becomes a 29%+ swing at the mill. That amplification causes real damage: excess inventory when demand normalizes, stockouts when it doesn't, and wildly inefficient factory utilization. The fix previewed here (and built properly in Weeks 3–4 and 10) is **shared, real information** — getting actual POS/consumption data to every tier instead of letting each node forecast off the order noise from its neighbor.
+
+```mermaid
+flowchart LR
+  A["Consumer demand about 100 per week"] --> B["Retailer orders 115 up 15 percent"]
+  B --> C["Brand orders 140 up 22 percent"]
+  C --> D["Factory orders 180 up 29 percent"]
+  D --> E["Mill ramps production sharply"]
+```
+*A small demand wobble amplifies into a much larger swing at every tier moving upstream.*
 
 ## 8. Why this course is data-first, not spreadsheet-first
 

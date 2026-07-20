@@ -32,6 +32,16 @@ d["log_price"] = np.log(d["unit_price"])
 
 **Read the `.shift(1)` before `.rolling(4)` twice — it's the single most common leakage bug in ML forecasting.** `d["units"].rolling(4).mean()` *without* the shift computes each row's 4-week average **including that row's own actual value** — meaning the "feature" for week 40 partly consists of week 40's own answer. A model trained on that feature will look spectacular in training and fall apart the moment it has to forecast a week whose actual value isn't known yet (which is every real forecast). `.shift(1)` first pushes the window back one week, so `roll_mean_4` at week 40 only ever uses weeks 36–39 — information genuinely available *before* week 40 happens. This exact bug (forgetting the shift) is called **lookahead bias**, and it's worth building a habit: any time you compute a rolling statistic for use as a forecasting feature, ask "does this window include the row I'm trying to predict?" before you trust it.
 
+```mermaid
+flowchart TD
+  W["Building the week 40 feature"] --> Wrong["No shift: window includes week 40 itself"]
+  W --> Right["Shift by 1: window is weeks 36 to 39 only"]
+  Wrong --> Bug["Lookahead bias: feature leaks its own answer"]
+  Right --> Safe["Leakage-safe feature"]
+```
+
+*Forgetting `.shift(1)` lets a rolling feature see the value it is supposed to predict.*
+
 `lag_1`...`lag_4`, `lag_52` are also leakage-safe by construction — a lag is inherently "value from N periods ago," so there's no way to accidentally include the current row. Drop the leading rows that don't have a full lag history yet (`dropna`), same as any lag-feature workflow.
 
 ## 2. Fit a gradient-boosted tree ensemble
@@ -87,6 +97,15 @@ Either way, shuffled cross-validation reports an accuracy number that has nothin
 ## 4. The right tool: rolling-origin backtesting
 
 **Rolling-origin cross-validation** (also called *walk-forward validation*): pick a series of cutoff points (the "origins") marching forward through time. At each origin, train only on data **before** it, forecast a fixed horizon **after** it, score that forecast, then slide the origin forward and repeat. Every fold respects the one rule that matters: **the model never sees anything from the future relative to its own forecast origin.**
+
+```mermaid
+flowchart LR
+  O1["Origin 1 train on early history test next 13 weeks"] --> O2["Origin 2 train on more history test next 13 weeks"]
+  O2 --> O3["Origin 3 train on even more history test next 13 weeks"]
+  O3 --> Rule["Rule: never train on data after the origin"]
+```
+
+*Each fold slides the training cutoff forward and only ever tests on weeks after it.*
 
 ```python
 from sklearn.metrics import mean_absolute_error

@@ -36,6 +36,16 @@ $$x_1, x_2 \ge 0 \qquad \text{(non-negativity — can't produce a negative quant
 
 Non-negativity looks trivial but it's a real constraint the solver needs — without it, a solver mathematically "sees" no reason not to produce -500 units of something if that happened to help the objective.
 
+```mermaid
+flowchart TD
+  A["Decision variables"] --> D["Linear program"]
+  B["Objective function"] --> D
+  C["Constraints"] --> D
+  D --> E["Feasible region"]
+  E --> F["Optimal solution"]
+```
+*The three building blocks of every LP combine into a feasible region, then an optimal solution.*
+
 ## 3. A full worked example — production mix
 
 **Crunch Gear** makes two products in its El Paso plant: the **Trailhead Jacket** and the **Alpine Backpack**. Each unit consumes shared resources, and each earns a different profit contribution:
@@ -69,6 +79,15 @@ Plot the two constraints above (axes: `x1` = jackets, `x2` = backpacks):
 The feasible region is a four-sided polygon (a "polytope" in higher dimensions) bounded by the two axes and the two constraint lines, with corners — mathematicians call them **vertices**, everyone else calls them **corner points** — at `(0,0)`, `(350,0)`, the intersection of the two slanted lines, and `(0,600)`.
 
 **The fundamental theorem of linear programming:** if an optimal solution exists, at least one optimal solution occurs at a **corner point** of the feasible region. This is *why* LP is solvable at all — instead of checking infinitely many points in the region, you only ever need to check the (finite) corners. The **simplex method**, invented by George Dantzig in 1947 and still the conceptual backbone of most LP solvers, does exactly that: it walks from corner to corner, always moving to a neighboring corner that improves the objective, until no neighbor improves it — at which point it has *proven* optimality, not just found a good answer.
+
+```mermaid
+flowchart LR
+  A["Start at origin Z equals 0"] --> B["Corner one Z equals 17500"]
+  B --> C["Corner two Z equals 19000 optimal"]
+  A --> D["Corner three Z equals 18000"]
+  D --> C
+```
+*Simplex walks from corner to corner, always improving Z, until no neighbor improves further.*
 
 **Find the binding corner by hand.** Solve the two constraint lines as simultaneous equations:
 

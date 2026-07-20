@@ -100,6 +100,18 @@ residual_t = actual_t − trend_t − seasonal_t
 
 Doing this for every quarter where trend is defined gives residuals all under about ±2 units — tiny, because this toy example was built to be almost noise-free on purpose. Your real SQL data this week will not be this clean; residuals of ±15–25 units on a series averaging 130 are completely normal for real retail demand. **A decomposition with zero residual is a red flag, not a win** — it usually means you've overfit the seasonal index to noise that was actually random, and it won't repeat next year.
 
+```mermaid
+flowchart LR
+  A["Actual series"] --> B["Centered moving average = trend"]
+  A --> C["Actual minus trend = detrended"]
+  B --> C
+  C --> D["Average by season = seasonal index"]
+  A --> E["Actual minus trend minus seasonal = residual"]
+  B --> E
+  D --> E
+```
+*The three-step classical additive decomposition: estimate trend first, subtract it to get a seasonal index, then whatever is left over is the residual.*
+
 ## 4. What the six SKUs in `demand_history` actually look like
 
 Run the sanity-check query from the [week README](../README.md) now if you haven't:
@@ -130,6 +142,18 @@ Decomposition by itself is **not** a forecast — it's a diagnosis. You now know
 - Strong, stable seasonality → seasonal naive (Lecture 2) is a shockingly strong baseline.
 - Real trend, weak seasonality → you need a method that tracks trend, like Holt's double exponential smoothing (Lecture 3).
 - Trend **and** strong seasonality together → you need both, and even then you should benchmark hard against seasonal naive, because — as you'll see with real numbers in Lecture 3 — the "smarter" method does not automatically win.
+
+```mermaid
+flowchart TD
+  A["Diagnose the SKU"] --> B{"Trend present?"}
+  B -->|No| C{"Seasonality present?"}
+  C -->|No| D["Moving average or naive"]
+  C -->|Yes| E["Seasonal naive"]
+  B -->|Yes| F{"Seasonality present?"}
+  F -->|No| G["Holt double exponential smoothing"]
+  F -->|Yes| H["Trend and seasonal method - benchmark vs seasonal naive"]
+```
+*Decomposition's trend/seasonality diagnosis is what points you at a forecasting method, not the other way around.*
 
 That last point is the thesis of this entire week, so hold onto it: **decomposition tells you what's there; it does not tell you which method wins.** Only scoring on held-out weeks (Lecture 3, Exercise 3) tells you that.
 

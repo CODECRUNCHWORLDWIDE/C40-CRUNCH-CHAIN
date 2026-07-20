@@ -81,6 +81,19 @@ d["log_price"].corr(d["promo"])   # -0.9999999999999999
 
 In this dataset, every promo week is *also* a price-cut week (from $129 to $99) — by construction, promotion and price move together with zero independent variation. That means OLS cannot tell "the promo dummy's effect" apart from "the price cut's effect" — it's mathematically the same question asked twice, and the solver arbitrarily splits one combined effect across two redundant columns, producing coefficients that are individually meaningless even though the *combined* prediction is fine. This is the single most common way causal regressions go wrong in real operations data: promotions almost always *bundle* a price cut with a display placement, extra marketing, and sometimes a bundle deal, all launching in the same week — so any one of those levers, modeled alone, will pick up credit that actually belongs to the others.
 
+```mermaid
+flowchart LR
+  A["Promotion week begins"] --> B["Price cut applied"]
+  A --> C["Promo flag set"]
+  B --> D["log price feature"]
+  C --> E["promo feature"]
+  D --> F["Perfect collinearity"]
+  E --> F
+  F --> G["OLS cannot separate the two effects"]
+```
+
+*One real-world cause splitting into two redundant columns confuses the regression.*
+
 **The fix here: drop the redundant column and keep the one you can act on independently.** Since `promo` and `log_price` carry the same information in this data, keep `log_price` alone — it's the more granular signal (a continuous price rather than a 0/1 flag) — and re-fit:
 
 ```python

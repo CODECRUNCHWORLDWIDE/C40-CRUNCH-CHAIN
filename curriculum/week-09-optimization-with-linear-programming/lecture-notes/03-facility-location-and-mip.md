@@ -68,6 +68,16 @@ $$\sum_{r} x_{kr} \le \text{capacity}_k \cdot y_k \quad \text{for every candidat
 
 **This last constraint is the whole trick of facility-location modeling.** Read it carefully: if $y_k = 0$ (closed), the right-hand side becomes $\text{capacity}_k \times 0 = 0$, which forces every $x_{kr}$ out of that candidate to zero — a closed site cannot ship anything, automatically, with no extra logic needed. If $y_k = 1$ (open), the constraint becomes the ordinary capacity limit from Lecture 2. One constraint, two behaviors, purely from multiplying capacity by a binary variable. This pattern — **linking a continuous variable's availability to a binary "on" switch by multiplying capacity by the binary** — is the single most reusable trick in this whole lecture; you'll use it again the moment any real model has an "only if we chose to do X" clause.
 
+```mermaid
+flowchart TD
+  A["Binary variable y for a candidate site"] --> B{"Is y equal to 1"}
+  B -->|"no site closed"| C["Capacity times y equals 0"]
+  C --> D["Every shipment out of site forced to 0"]
+  B -->|"yes site open"| E["Capacity times y equals full capacity"]
+  E --> F["Ordinary capacity limit applies"]
+```
+*Multiplying capacity by the binary open switch turns the constraint on or off automatically.*
+
 ## 4. Solving it in PuLP
 
 ```python
@@ -148,6 +158,18 @@ y_relaxed = {k: LpVariable(f"open_{k}", lowBound=0, upBound=1) for k in candidat
 The LP relaxation can (and often does) return fractional values like $y_{AE} = 0.4$ — "40% open." That number has no operational meaning; you cannot partially staff, partially lease, or partially build a distribution center. **This is the exact test for whether a real-world decision needs MIP**: if a fractional value for a variable would be nonsense in the real world (open/close, build/don't-build, assign-to-exactly-one-of-these), the variable must be integer or binary, and the problem is a MIP, not an LP. If a fractional value is perfectly fine (units shipped, hours worked, dollars spent), continuous is correct and faster to solve.
 
 **Why "faster" matters here:** LPs solve in polynomial time — the simplex or interior-point methods reliably solve LPs with millions of variables. MIPs are, in the general case, dramatically harder (formally NP-hard) — the solver can't just walk between corners the way simplex does, because the "corners" that respect integrality aren't a smooth set of points. Instead it uses **branch and bound**: solve the LP relaxation first (ignoring integrality) to get a bound on the best possible answer, then pick a fractional variable, "branch" into two subproblems (try $y_k = 0$ and try $y_k = 1$ separately), and recursively repeat — pruning any branch whose LP-relaxation bound is already worse than the best integer solution found so far. For a handful of binary variables, as here, this finishes in milliseconds; for thousands, real MIPs can take minutes or hours even on good solver hardware, which is *why* modeling only the variables that truly need to be integer (and leaving everything else continuous) matters for anything beyond a lecture-sized example.
+
+```mermaid
+flowchart TD
+  A["Solve LP relaxation get bound"] --> B{"Pick a fractional variable"}
+  B -->|"branch y equals 0"| C["Subproblem with site closed"]
+  B -->|"branch y equals 1"| D["Subproblem with site open"]
+  C --> E["Solve and compare bound to best integer solution"]
+  D --> F["Solve and compare bound to best integer solution"]
+  E --> G["Prune if worse else keep exploring"]
+  F --> G
+```
+*Branch and bound repeatedly splits on a fractional variable, pruning branches that cannot beat the best integer solution found so far.*
 
 ## 6. SciPy's MIP support
 

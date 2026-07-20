@@ -106,6 +106,20 @@ Crunch Gear needs 2,000 lb of Alpine Shell Jackets at the Reno DC in 5 days for 
 
 Option A is cheapest but its transit variance (3–7 days) makes it a real risk against a hard Friday deadline — if it lands on day 7, the flash sale opens with no inventory, and lost-sale cost from a blown launch very likely exceeds the ~$400 saved over LTL. Option B (LTL, 2 days, low variance) comfortably beats the deadline with margin and costs a fraction of Air. Option C is wildly overpriced for a 5-day-out deadline it doesn't need to hit that fast. **The right call is B** — not because it's cheapest, and not because it's fastest, but because it's the cheapest option that reliably clears the actual constraint. This is the exact reasoning [Challenge 2](../challenges/challenge-02-mode-selection-tradeoff.md) has you apply across a batch of real shipment scenarios.
 
+```mermaid
+flowchart TD
+  A["Need 2000 lb at Reno DC in 5 days"] --> B["Option A Intermodal cheapest but 3 to 7 day variance"]
+  A --> C["Option B LTL 2 day transit low variance"]
+  A --> D["Option C Air 4 day transit highest cost"]
+  B --> E{"Reliably beats the Friday deadline"}
+  C --> E
+  D --> E
+  E -->|"Too risky against day 7"| F["Reject Option A"]
+  E -->|"Comfortable margin"| G["Choose Option B"]
+  E -->|"Beats it but overpriced"| H["Reject Option C"]
+```
+*Weighing Options A, B, and C against the hard Friday deadline to find the cheapest option that reliably clears the constraint.*
+
 ## 5. Freight spend analysis — the view finance wants
 
 Tie cost back to volume shipped and you get freight spend **as a rate**, which is the number that actually tracks efficiency over time (raw total spend just tracks how much you shipped):
