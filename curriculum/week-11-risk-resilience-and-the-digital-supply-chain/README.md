@@ -18,6 +18,14 @@ By the end of this week, you will be able to:
 - **Design resilience** — buffers (safety stock), dual-sourcing, and network redundancy — and quantify the trade-off between the cost of resilience and the expected annual loss it removes.
 - **Automate the plan-forecast-replan loop** — build a data pipeline over SQL that computes rolling baselines, flags anomalies before they're obvious, and understand where control towers, exception management, and AI-assisted (including agentic) automation fit in a modern operations function.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `SCM 3301` — identify supply chain risk and single points of failure, prioritise them, design mitigation whose cost can be stated, and explain the role of information systems and data in a modern operations function. |
+| Industry | Stand up the monitoring that catches a disruption before anybody reports it, and put a defensible price on the resilience you are asking the business to buy. |
+| Beyond the bar | The anomaly detector's threshold is chosen rather than assumed, by costing both kinds of mistake — a day flagged that was fine, and a day of disruption caught late — and reporting the full cost table so the minimum is visible — `challenges/challenge-02-anomaly-detection-on-ops.md` |
+
 ## Prerequisites
 
 - Comfortable with `SELECT`, `WHERE`, `GROUP BY`, `HAVING`, joins, `CASE`, and window functions (`AVG() OVER`, `ROW_NUMBER()`) in SQL — Weeks 2–10 of this course, or [C33 Crunch SQL](../../../C33-CRUNCH-SQL/).

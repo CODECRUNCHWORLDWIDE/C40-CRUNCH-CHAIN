@@ -18,6 +18,14 @@ By the end of this week, you will be able to:
 - **Explain** the bullwhip effect in plain terms — why a small wiggle in consumer demand becomes a large swing in factory orders — and why it matters before you've even priced a lane or run a forecast.
 - **Frame** every topic ahead in this course as a decision that should be driven by data pulled from a real table, not a hunch or a spreadsheet guess.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `MAN 3025` — describe a supply chain end to end, its echelons and its three flows, and define and compute the operating measures by which the chain is judged. |
+| Industry | Produce the weekly operating numbers a manager asks for — on-time-in-full, fill rate, perfect order, turns, cash-to-cash — from a raw order table, and say which one is lying and why. |
+| Beyond the bar | The five KPIs are computed by hand before a single query is written, so that when the same numbers come back out of a database in Week 02 the learner can sanity-check them on sight — `exercises/exercise-02-compute-core-kpis-by-hand.md` |
+
 ## Prerequisites
 
 - You can run commands in a terminal and read basic Python (per the course syllabus) — you won't need either heavily this week, but the mini-project introduces the SQL seed pattern you'll use from Week 2 onward.

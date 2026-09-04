@@ -18,6 +18,14 @@ By the end of this week, you will be able to:
 - **Analyze** carrier on-time performance and freight spend directly from shipment-level data in SQL — no manual pivot tables.
 - **Balance** transportation cost against service commitments across a multi-DC network, and defend a mode/carrier mix with numbers instead of instinct.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `SCM 3301` — select transportation modes and carriers on cost, speed and reliability, analyse freight spend and delivery performance, and plan distribution routes under a capacity constraint. |
+| Industry | Cut freight spend across a slate of lanes without missing a committed delivery date, and show the carrier scorecard the decision rests on. |
+| Beyond the bar | The Clarke-Wright savings algorithm is implemented from scratch, proven to beat the nearest-neighbour route on the same network, and required to carry its own capacity and coverage assertions in code — `challenges/challenge-01-savings-algorithm-routing.md` |
+
 ## Prerequisites
 
 - Comfortable with `SELECT`, `WHERE`, `GROUP BY`, `HAVING`, joins, and window functions in SQL (Weeks 2–6 of this course, or [C33 Crunch SQL](../../../C33-CRUNCH-SQL/)).

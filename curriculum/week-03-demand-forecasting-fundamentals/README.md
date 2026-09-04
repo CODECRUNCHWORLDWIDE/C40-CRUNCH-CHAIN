@@ -19,6 +19,14 @@ By the end of this week, you will be able to:
 - **Always compare against a naive benchmark** — treat "beats naive" as the minimum bar for shipping any forecasting method, this week and every week after.
 - **Explain, with a specific counter-example from this week's own data, why a simple well-tuned baseline can beat a fancier smoothing method** — and therefore why you score before you commit to a method.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `SCM 3301` — forecast demand with time-series methods, and measure forecast error honestly against a naive benchmark. |
+| Industry | Ship a demand forecast for a live catalogue and defend its accuracy, in writing, to a planning manager who has never heard of MAPE. |
+| Beyond the bar | Fifty SKUs rather than one tidy series, every method scored per SKU against the naive baseline, and a written finding when the simple method wins — `mini-project/README.md` |
+
 ## Prerequisites
 
 - Comfortable with `SELECT`, `WHERE`, `ORDER BY`, `GROUP BY`, and basic aggregates in SQL (Week's 2 material, or [C33 Crunch SQL](../../../C33-CRUNCH-SQL/) Weeks 1–3).

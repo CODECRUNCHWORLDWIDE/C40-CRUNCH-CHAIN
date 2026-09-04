@@ -18,6 +18,14 @@ By the end of this week, you will be able to:
 - **Solve the single-period newsvendor problem** for perishable or one-shot inventory, where there is no "next cycle" to recover from a stockout or an overbuy.
 - **Extend** stocking logic across a multi-echelon network and see, in dollars, the cost of positioning safety stock in the wrong place.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `ISM 4400` — determine order quantity from the holding-versus-ordering trade-off, set safety stock and reorder points to a target service level, and solve the single-period newsvendor decision. |
+| Industry | Set the stocking policy for a whole catalogue at a stated service level and answer the budget question that follows it: what does running the catalogue at that level cost the business, and what would one more point of service add on top. |
+| Beyond the bar | The designed policy is simulated against the demand history to check empirically that it delivers the service level it was sized for, instead of trusting the formula that produced it — `exercises/exercise-03-simulate-a-reorder-point.md` |
+
 ## Prerequisites
 
 - Comfortable with `SELECT`, `JOIN`, `GROUP BY`, and basic aggregate functions in SQL (Weeks 2–3 of this course, or [C33 Crunch SQL](../../../C33-CRUNCH-SQL/)).

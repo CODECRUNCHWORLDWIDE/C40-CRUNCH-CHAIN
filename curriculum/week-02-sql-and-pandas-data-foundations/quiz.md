@@ -11,6 +11,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - C) `site_type` is required by SQL syntax for every table.
 - D) There's no real reason — it's just a style preference with no consequence.
 
+<details>
+<summary>Answer</summary>
+
+**B** — one table with a type discriminator column avoids duplicating identical structure three times, while the `CHECK` constraint still enforces which roles are valid.
+
+</details>
+
 ---
 
 **Q2.** The `lanes` table's `one_origin_only` `CHECK` constraint enforces that:
@@ -19,6 +26,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - B) Exactly one of `origin_supplier_id` or `origin_site_id` is non-`NULL` — never both, never neither.
 - C) A lane's destination must be a supplier, not a site.
 - D) Lane costs must always be positive.
+
+<details>
+<summary>Answer</summary>
+
+**B** — the XOR-style constraint: exactly one origin type, never both, never neither.
+
+</details>
 
 ---
 
@@ -29,6 +43,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - C) A ledger preserves full history, so any past point-in-time balance can be computed by summing up to that date — a single updated column loses that history and can silently desync from reality.
 - D) There's no difference; both approaches store identical information.
 
+<details>
+<summary>Answer</summary>
+
+**C** — a ledger you sum on read preserves full history; an in-place balance column only ever tells you "now," and can silently drift from correct if any update is missed.
+
+</details>
+
 ---
 
 **Q4.** You write `SELECT o.order_id, ol.qty_ordered, sl.qty_shipped FROM order_lines ol JOIN orders o ON ... LEFT JOIN shipment_lines sl ON ...` for an order line that hasn't shipped yet. What does `sl.qty_shipped` return for that row?
@@ -37,6 +58,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - B) An empty string
 - C) `NULL`
 - D) The query errors out
+
+<details>
+<summary>Answer</summary>
+
+**C** — an unmatched `LEFT JOIN` row returns `NULL` for every column from the unmatched side, not `0` and not an error.
+
+</details>
 
 ---
 
@@ -47,6 +75,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - C) `SUM()` raises an error whenever it encounters a `NULL`.
 - D) `NULL` values cause `SUM()` to return `NULL` for the entire query, with no warning.
 
+<details>
+<summary>Answer</summary>
+
+**B** — `SUM()` quietly ignores `NULL`s (which is often the desired behavior for the sum itself), but that quiet skipping is exactly what makes it easy to build a downstream calculation that wrongly assumes every row had a real value.
+
+</details>
+
 ---
 
 **Q6.** An order has 2 order lines and shipped in 2 separate shipments. You write `SELECT * FROM orders o JOIN shipments sh ON sh.order_id = o.order_id JOIN order_lines ol ON ol.order_id = o.order_id WHERE o.order_id = <that order>`. How many rows does this return for that one order?
@@ -55,6 +90,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - B) 2
 - C) 4
 - D) 0, because the join is invalid
+
+<details>
+<summary>Answer</summary>
+
+**C** — 4 rows: 2 order lines × 2 shipments, because both joins go independently through `order_id` with no bridge connecting the *specific* line to the *specific* shipment that carried it. This is the fan-out.
+
+</details>
 
 ---
 
@@ -65,6 +107,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - C) Remove the `order_lines` join entirely.
 - D) Switch `JOIN` to `LEFT JOIN` everywhere.
 
+<details>
+<summary>Answer</summary>
+
+**B** — routing through `shipment_lines` (which stores the true `order_line_id` ↔ `shipment_id` pairing) eliminates the spurious combinations Q6's naive join creates.
+
+</details>
+
 ---
 
 **Q8.** What is the key difference between what `GROUP BY` does and what a window function (`... OVER (...)`) does to the rows passed into it?
@@ -73,6 +122,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - B) `GROUP BY` collapses multiple rows into one row per group; a window function computes a value per row while keeping every original row intact.
 - C) Window functions can only be used with `COUNT()`.
 - D) `GROUP BY` keeps every row; window functions collapse them.
+
+<details>
+<summary>Answer</summary>
+
+**B** — this is the core distinction the whole lecture builds on: `GROUP BY` collapses; window functions preserve every row while still computing an aggregate-like value per row.
+
+</details>
 
 ---
 
@@ -83,6 +139,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - C) Deletes rows that don't match the partition.
 - D) Sorts the entire result set globally, ignoring `sku_id` and `site_id`.
 
+<details>
+<summary>Answer</summary>
+
+**B** — `PARTITION BY` is to window functions what `GROUP BY` is to aggregates: it resets the calculation per group, but the rows themselves survive in the output.
+
+</details>
+
 ---
 
 **Q10.** Why would an operations team promise a delivery time based on `PERCENTILE_CONT(0.9)` of historical transit days rather than `AVG()`?
@@ -91,6 +154,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - B) `AVG()` can be dragged around by a small number of outliers; a P90 tells you the value that 90% of shipments beat, which is a more honest number to promise against if you want to be right most of the time.
 - C) `AVG()` cannot be computed on date differences.
 - D) They're mathematically identical for any dataset.
+
+<details>
+<summary>Answer</summary>
+
+**B** — P90 tells you the value 90% of your historical shipments were faster than or equal to; `AVG()` can look deceptively good (or bad) if a small number of outliers skew it.
+
+</details>
 
 ---
 
@@ -101,6 +171,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - C) They are two names for the same function.
 - D) `DENSE_RANK()` only works on numeric columns.
 
+<details>
+<summary>Answer</summary>
+
+**B** — `RANK()` leaves a gap in the rank sequence after ties (1,1,3); `DENSE_RANK()` doesn't (1,1,2).
+
+</details>
+
 ---
 
 **Q12.** `LAG(x) OVER (PARTITION BY customer ORDER BY order_date)` for a customer's very first order in the dataset returns:
@@ -109,6 +186,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - B) The value from that customer's most recent order instead
 - C) `NULL`, because there is no prior row in that customer's partition
 - D) An error
+
+<details>
+<summary>Answer</summary>
+
+**C** — there's no row before the first one in that partition, so `LAG()` correctly returns `NULL` there.
+
+</details>
 
 ---
 
@@ -119,6 +203,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - C) It doesn't matter which tool holds the lasting data, as long as one of them does.
 - D) pandas and SQL should each independently maintain their own separate copy of every table, kept manually in sync.
 
+<details>
+<summary>Answer</summary>
+
+**B** — SQL stays the system of record; pandas is a scratch workbench for what SQL genuinely can't do, and results worth keeping flow back into SQL.
+
+</details>
+
 ---
 
 **Q14.** `to_sql("my_table", engine, if_exists="replace")`, run on a schedule (e.g., a weekly cron job), is risky because:
@@ -127,6 +218,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - B) It drops and recreates the table from the current DataFrame's shape every time it runs, silently destroying any history that isn't in that specific DataFrame — appropriate for a one-time setup, dangerous as a recurring habit.
 - C) `"replace"` doesn't actually work in pandas; only `"append"` and `"fail"` are real options.
 - D) It requires manually dropping the table first, so it can never run unattended.
+
+<details>
+<summary>Answer</summary>
+
+**B** — `"replace"` recreates the table from scratch every call; on a recurring schedule this silently discards any data not present in that run's DataFrame, which is why it belongs in one-time setup code, not a loop.
+
+</details>
 
 ---
 
@@ -137,29 +235,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before starting Week 3. A mix 
 - C) SQL and pandas use fundamentally incompatible arithmetic, so small disagreements are always expected and can be ignored.
 - D) `pandas.read_sql` rounds all numbers to two decimal places automatically.
 
----
-
-## Answer key
-
 <details>
-<summary>Reveal after attempting</summary>
+<summary>Answer</summary>
 
-1. **B** — one table with a type discriminator column avoids duplicating identical structure three times, while the `CHECK` constraint still enforces which roles are valid.
-2. **B** — the XOR-style constraint: exactly one origin type, never both, never neither.
-3. **C** — a ledger you sum on read preserves full history; an in-place balance column only ever tells you "now," and can silently drift from correct if any update is missed.
-4. **C** — an unmatched `LEFT JOIN` row returns `NULL` for every column from the unmatched side, not `0` and not an error.
-5. **B** — `SUM()` quietly ignores `NULL`s (which is often the desired behavior for the sum itself), but that quiet skipping is exactly what makes it easy to build a downstream calculation that wrongly assumes every row had a real value.
-6. **C** — 4 rows: 2 order lines × 2 shipments, because both joins go independently through `order_id` with no bridge connecting the *specific* line to the *specific* shipment that carried it. This is the fan-out.
-7. **B** — routing through `shipment_lines` (which stores the true `order_line_id` ↔ `shipment_id` pairing) eliminates the spurious combinations Q6's naive join creates.
-8. **B** — this is the core distinction the whole lecture builds on: `GROUP BY` collapses; window functions preserve every row while still computing an aggregate-like value per row.
-9. **B** — `PARTITION BY` is to window functions what `GROUP BY` is to aggregates: it resets the calculation per group, but the rows themselves survive in the output.
-10. **B** — P90 tells you the value 90% of your historical shipments were faster than or equal to; `AVG()` can look deceptively good (or bad) if a small number of outliers skew it.
-11. **B** — `RANK()` leaves a gap in the rank sequence after ties (1,1,3); `DENSE_RANK()` doesn't (1,1,2).
-12. **C** — there's no row before the first one in that partition, so `LAG()` correctly returns `NULL` there.
-13. **B** — SQL stays the system of record; pandas is a scratch workbench for what SQL genuinely can't do, and results worth keeping flow back into SQL.
-14. **B** — `"replace"` recreates the table from scratch every call; on a recurring schedule this silently discards any data not present in that run's DataFrame, which is why it belongs in one-time setup code, not a loop.
-15. **B** — the single most common cause of two independently "correct-looking" calculations disagreeing is a fan-out inflating a sum on one of the two paths, exactly as Lecture 2 Section 1, Lecture 3 Section 4, and Challenge 2 all demonstrated.
+**B** — the single most common cause of two independently "correct-looking" calculations disagreeing is a fan-out inflating a sum on one of the two paths, exactly as Lecture 2 Section 1, Lecture 3 Section 4, and Challenge 2 all demonstrated.
 
 </details>
 
 **Scoring:** 12+ → start Week 3. 9–11 → re-read the lecture sections behind your misses, especially Lecture 2 Section 1 and Lecture 3 Section 4 if you missed the fan-out questions. <9 → re-read all three lectures from the top; joins, `GROUP BY`, and window functions are the load-bearing skills for every remaining week of this course.
+
+---

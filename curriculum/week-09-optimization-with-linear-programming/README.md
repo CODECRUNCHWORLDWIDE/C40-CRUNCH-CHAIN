@@ -16,6 +16,14 @@ By the end of this week, you will be able to:
 - **Build a facility-location model** with binary open/close decisions, recognizing when a problem needs **mixed-integer programming (MIP)** instead of pure LP, and why a fractional "open 60% of a warehouse" answer is meaningless.
 - **Apply** everything above to production planning and capacitated sourcing — multi-period, multi-product problems where capacity, not demand, is the binding constraint.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `ISM 4400` — apply linear programming, the transportation model and facility location to an operations decision, and interpret the solution. |
+| Industry | Deliver an optimisation as a pipeline a colleague or a scheduled job can re-run next month when the forecast changes, not as a notebook full of hard-coded numbers. |
+| Beyond the bar | Shadow prices are read back off the solved model and written into the database alongside the shipping plan, so the marginal value of one more unit of capacity is part of the deliverable rather than a footnote — `mini-project/README.md` |
+
 ## Prerequisites
 
 - Comfortable with `SELECT`, `WHERE`, `JOIN`, and basic aggregates in SQL (Weeks 1–8 of this course, or [C33 Crunch SQL](../../../C33-CRUNCH-SQL/)).

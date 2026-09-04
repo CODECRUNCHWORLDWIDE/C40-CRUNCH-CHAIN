@@ -18,6 +18,14 @@ By the end of this week, you will be able to:
 - **Quantify lead-time risk** with a safety-stock formula, and trace its direct, dollar-denominated knock-on effect on inventory policy.
 - **Recommend sourcing actions** — consolidation, dual-sourcing, or award reallocation — and defend them with a should-cost model and a documented set of assumptions.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `SCM 3301` — analyse purchasing spend, evaluate suppliers on cost, quality, delivery and lead-time reliability, and source on total cost of ownership rather than unit price. |
+| Industry | Walk into a supplier negotiation with a bottom-up cost estimate and an award recommendation that survives being asked where each number came from. |
+| Beyond the bar | A should-cost model built from labour, overhead and margin — the supplier's cost structure reconstructed from the outside, and the gap between it and the quoted price named as the negotiating position — `challenges/challenge-02-should-cost-model.md` |
+
 ## Prerequisites
 
 - Comfortable with `SELECT`, `WHERE`, `GROUP BY`, `JOIN`, and basic aggregate functions (`SUM`, `AVG`, `COUNT`) in SQL — Week 2's foundations.

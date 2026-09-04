@@ -18,6 +18,14 @@ By the end of this week, you will be able to:
 - **Move data between SQL and pandas** — read query results with `pandas.read_sql`, do further modeling in a DataFrame, and write results back to Postgres with `to_sql` — while keeping the database, never a spreadsheet, as the system of record.
 - **Compute operational KPIs** — fill rate, OTIF, and lead-time percentiles — directly in SQL, then independently recompute them in pandas and reconcile the two, catching the exact kind of silent bug (a join fan-out, a duplicate row) that makes cross-checking your tools a required habit, not a nice-to-have.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `ISM 4400` — work with the operating records of a supply chain — orders, shipments, receipts, inventory — and produce a performance report from them. |
+| Industry | Take a folder of raw system exports, load it into a schema that refuses bad data, and hand back the KPI pack by Friday without a spreadsheet in the chain. |
+| Beyond the bar | The same KPI is computed twice, independently in SQL and in pandas, over a discrepancy planted on purpose that the learner has to find and explain rather than paper over — `challenges/challenge-02-reconcile-sql-and-pandas-kpis.md` |
+
 ## Prerequisites
 
 - Week 1 complete — you should recognize every entity in this week's schema (supplier, plant, DC, lane, order, shipment) and every KPI (OTIF, fill rate) from Lecture 2's hand computations.

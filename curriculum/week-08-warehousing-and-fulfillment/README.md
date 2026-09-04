@@ -18,6 +18,14 @@ By the end of this week, you will be able to:
 - **Batch** orders into waves that share travel across a pick, and **quantify** how much batching reduces total trips versus one-order-at-a-time picking.
 - **Size** a picking labor plan to a stated throughput target, and **measure** fulfillment performance with the three metrics that matter: throughput, order cycle time, and pick productivity.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `ISM 4400` — describe the receive-to-ship flow inside a distribution centre, and design storage, picking and labour to a stated throughput target. |
+| Industry | Re-slot a distribution centre and report, in feet of pick travel and in labour hours, exactly what the change saves and what it costs to make. |
+| Beyond the bar | Order batching is layered on top of the re-slot and its trip reduction is measured on the real pick profile rather than asserted, so the two levers can be compared against each other — `exercises/exercise-03-order-batching-heuristic.md` |
+
 ## Prerequisites
 
 - Comfortable with `SELECT`, `WHERE`, `GROUP BY`, `HAVING`, joins, and window functions in SQL (Weeks 2–7 of this course, or [C33 Crunch SQL](../../../C33-CRUNCH-SQL/)).

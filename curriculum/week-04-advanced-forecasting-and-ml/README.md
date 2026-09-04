@@ -18,6 +18,14 @@ By the end of this week, you will be able to:
 - **Handle two hard cases**: intermittent demand with Croston's method (when most periods are zero) and hierarchical reconciliation (when SKU-level and total-level forecasts must add up).
 - **Choose the winning model with evidence** — compare MAE/MAPE across models on the same holdout, and know when Week 3's simple baseline is still the right call because the fancier model didn't actually win.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `SCM 3301` — extend forecasting to seasonality, causal drivers and irregular demand, and validate a model on data it has not seen. |
+| Industry | Prove a new forecasting model actually beats the incumbent on a backtest that cannot leak — and report plainly that it did not, when it did not. |
+| Beyond the bar | The learner reviews work somebody else produced: a colleague's regression coefficient table to rule on before it ships, and three junior backtest designs to be judged for leakage, each one named and explained — `homework.md` |
+
 ## Prerequisites
 
 - Week 3 complete: you can compute and interpret MAPE and bias, and you've fit at least a moving-average and simple-exponential-smoothing baseline against a holdout.

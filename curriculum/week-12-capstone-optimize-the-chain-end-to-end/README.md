@@ -19,6 +19,14 @@ By the end of this week, you will be able to:
 - **Automate** the forecast → policy → optimize → report loop into a single script that anyone on the team can re-run when new data lands.
 - **Present** the result as a one-page executive recommendation: the headline number, the trade-off, the ask, and the risks — the way you'd actually hand this to a VP of Supply Chain, not the way you'd hand it to another analyst.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `ISM 4400` — bring the whole operations and supply chain outcome set onto one operating problem, and defend the recommendation to management. |
+| Industry | Cut total network cost against an explicit service constraint, and get the result past the ninety seconds of attention a VP gives a memo before forwarding it or dropping it. |
+| Beyond the bar | The pipeline has to re-run end to end with no manual steps, and has to report `Infeasible` when a stress scenario genuinely cannot be met rather than returning a quietly wrong number — `challenges/challenge-01-end-to-end-optimization.md` |
+
 ## Prerequisites
 
 - Comfortable with SQL joins, aggregation, and window functions (Weeks 1–2, and C33 Crunch SQL if you took it).

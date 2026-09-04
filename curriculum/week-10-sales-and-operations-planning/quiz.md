@@ -11,6 +11,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - C) Reconciliation → Demand review → Supply review → Executive sign-off
 - D) Executive sign-off → Demand review → Reconciliation → Supply review
 
+<details>
+<summary>Answer</summary>
+
+**B** — Demand review, then supply review, then reconciliation, then executive sign-off, in that order; each stage's output feeds the next.
+
+</details>
+
 ---
 
 **Q2.** Trail Footwear's April `stat_forecast_units` is 12,200 and `sales_input_units` is 13,400; the `consensus_forecast_units` on record is 12,800. The lecture's point about that number is that:
@@ -19,6 +26,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - B) It's a documented, negotiated position tied to a stated assumption (a launch ramping to 50% run rate), not a formula result
 - C) It's simply wrong and should be corrected to match `sales_input_units`
 - D) `consensus_forecast_units` is always required to equal the average of the other two columns
+
+<details>
+<summary>Answer</summary>
+
+**B** — the consensus number is a documented negotiated position tied to a specific stated assumption, not a blind average or an automatic pick of one side.
+
+</details>
 
 ---
 
@@ -29,6 +43,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - C) A revenue target; a hiring plan
 - D) They produce the same output, just from different departments
 
+<details>
+<summary>Answer</summary>
+
+**B** — demand review produces the one consensus forecast; supply review checks that forecast against real capacity and reports the size of any gap.
+
+</details>
+
 ---
 
 **Q4.** In a SQL running-balance query, why is `PARTITION BY product_family` required in the window function?
@@ -37,6 +58,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - B) Without it, the running total would sum across all three families instead of resetting for each one
 - C) It's optional — `ORDER BY` alone produces the same result
 - D) It converts the query from a window function to a subquery
+
+<details>
+<summary>Answer</summary>
+
+**B** — without `PARTITION BY product_family`, `SUM() OVER (ORDER BY month)` would run one continuous total across all rows regardless of family, corrupting every family's balance after the first.
+
+</details>
 
 ---
 
@@ -47,6 +75,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - C) Holding cost
 - D) Overtime cost
 
+<details>
+<summary>Answer</summary>
+
+**B** — chase's defining cost is repeated hiring/layoff as workforce size chases demand every month; level, by design, avoids this entirely by holding capacity constant.
+
+</details>
+
 ---
 
 **Q6.** In Lecture 2's worked example, chase and level strategies had **identical** total production cost ($195,000). Why?
@@ -55,6 +90,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - B) Both strategies produce the same total number of units over the horizon (equal to total demand), at the same regular unit cost — only the *timing* of production differs
 - C) Level always costs more to produce because it uses overtime
 - D) Chase never actually produces the full demand total
+
+<details>
+<summary>Answer</summary>
+
+**B** — both strategies, over the full horizon, produce a total number of units equal to total demand (chase by construction; level because production settled back to the starting inventory level by the end) — same units, same regular rate, same total production cost; only *when* those units get made differs.
+
+</details>
 
 ---
 
@@ -65,6 +107,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - C) Chase is illegal under labor law
 - D) Level uses less total production, which is always cheaper
 
+<details>
+<summary>Answer</summary>
+
+**B** — the specific cost structure in the example (hiring $60/unit, holding only $4/unit/month) made avoiding workforce churn worth more than the extra inventory holding cost; a different cost structure could flip this result.
+
+</details>
+
 ---
 
 **Q8.** The mixed strategy in Lecture 2's example ran a temporary negative ending inventory (a backorder) in month 4. This happened because:
@@ -73,6 +122,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - B) Even after ramping capacity and using maximum available overtime that month, the combination still fell short of demand, and the inventory buffer built up in earlier months wasn't large enough to cover the rest
 - C) Mixed strategies can never avoid stockouts
 - D) Month 4's demand was miscalculated
+
+<details>
+<summary>Answer</summary>
+
+**B** — the ramp-plus-overtime combination in month 4 still fell short of demand, and the inventory buffer from months 1-2 (built more slowly under a moderate ramp than under level) wasn't big enough to fully absorb the rest.
+
+</details>
 
 ---
 
@@ -83,6 +139,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - C) IBP replaces the need for a demand review entirely
 - D) IBP is just a rebranding with no functional difference from S&OP
 
+<details>
+<summary>Answer</summary>
+
+**B** — IBP's addition is folding Finance in as a peer reconciling revenue/margin, not just units, and making the process more continuous rather than a single monthly event.
+
+</details>
+
 ---
 
 **Q10.** A family can hit 100% of its unit revenue target and still have a real problem once you check margin. Why?
@@ -91,6 +154,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - B) Hitting the volume target by leaning on overtime/subcontract units (which cost more per unit) can erode margin even while revenue looks on-target
 - C) Margin can only be computed once a year
 - D) This can never actually happen
+
+<details>
+<summary>Answer</summary>
+
+**B** — overtime and subcontract units cost more per unit than regular-time units, so hitting a volume/revenue target using expensive levers can still miss the margin target even while revenue looks fine.
+
+</details>
 
 ---
 
@@ -101,6 +171,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - C) The forecast must be wrong
 - D) Overtime cost is too high to ever use
 
+<details>
+<summary>Answer</summary>
+
+**B** — this is a structural, single-month capacity ceiling problem: April cannot supply its own forecast even maxed out, independent of anything that happened in earlier months.
+
+</details>
+
 ---
 
 **Q12.** In Exercise 3, closing March's small gap first (bringing its ending inventory to exactly 900) still wasn't enough to prevent an April shortfall. Why not?
@@ -109,6 +186,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - B) March's fix only brought the balance up to the safety-stock floor, not a surplus — it left no *extra* buffer to help absorb April's much larger structural shortfall
 - C) April's shortfall has nothing to do with any earlier month
 - D) Overtime capacity resets to zero every month regardless of prior usage
+
+<details>
+<summary>Answer</summary>
+
+**B** — bringing March exactly to the 900-unit floor left zero surplus above that floor to carry forward; April's shortfall (thousands of units) is far larger than what one month's minimal fix could ever supply.
+
+</details>
 
 ---
 
@@ -119,6 +203,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - C) "Downside: sales will probably be lower"
 - D) "Downside: we should plan conservatively"
 
+<details>
+<summary>Answer</summary>
+
+**B** — it names a specific, testable assumption change (the launch date slipping, and exactly what demand reverts to) rather than a vague sentiment.
+
+</details>
+
 ---
 
 **Q14.** Put the four required parts of a gap-closing recommendation (Lecture 3, Section 6) in order:
@@ -127,6 +218,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - B) Number → Cause → Costed options → Recommendation
 - C) Options → Number → Recommendation → Cause
 - D) Cause → Recommendation → Number → Options
+
+<details>
+<summary>Answer</summary>
+
+**B** — Number, then Cause, then costed Options, then a stated Recommendation — in that order, every time.
+
+</details>
 
 ---
 
@@ -137,29 +235,13 @@ Fifteen questions. Lectures closed. Aim for 12/15 before moving to Week 11. A mi
 - C) A requirement that only one person may enter numbers into the S&OP system
 - D) The single query used to generate the balance table
 
----
-
-## Answer key
-
 <details>
-<summary>Reveal after attempting</summary>
+<summary>Answer</summary>
 
-1. **B** — Demand review, then supply review, then reconciliation, then executive sign-off, in that order; each stage's output feeds the next.
-2. **B** — the consensus number is a documented negotiated position tied to a specific stated assumption, not a blind average or an automatic pick of one side.
-3. **B** — demand review produces the one consensus forecast; supply review checks that forecast against real capacity and reports the size of any gap.
-4. **B** — without `PARTITION BY product_family`, `SUM() OVER (ORDER BY month)` would run one continuous total across all rows regardless of family, corrupting every family's balance after the first.
-5. **B** — chase's defining cost is repeated hiring/layoff as workforce size chases demand every month; level, by design, avoids this entirely by holding capacity constant.
-6. **B** — both strategies, over the full horizon, produce a total number of units equal to total demand (chase by construction; level because production settled back to the starting inventory level by the end) — same units, same regular rate, same total production cost; only *when* those units get made differs.
-7. **B** — the specific cost structure in the example (hiring $60/unit, holding only $4/unit/month) made avoiding workforce churn worth more than the extra inventory holding cost; a different cost structure could flip this result.
-8. **B** — the ramp-plus-overtime combination in month 4 still fell short of demand, and the inventory buffer from months 1-2 (built more slowly under a moderate ramp than under level) wasn't big enough to fully absorb the rest.
-9. **B** — IBP's addition is folding Finance in as a peer reconciling revenue/margin, not just units, and making the process more continuous rather than a single monthly event.
-10. **B** — overtime and subcontract units cost more per unit than regular-time units, so hitting a volume/revenue target using expensive levers can still miss the margin target even while revenue looks fine.
-11. **B** — this is a structural, single-month capacity ceiling problem: April cannot supply its own forecast even maxed out, independent of anything that happened in earlier months.
-12. **B** — bringing March exactly to the 900-unit floor left zero surplus above that floor to carry forward; April's shortfall (thousands of units) is far larger than what one month's minimal fix could ever supply.
-13. **B** — it names a specific, testable assumption change (the launch date slipping, and exactly what demand reverts to) rather than a vague sentiment.
-14. **B** — Number, then Cause, then costed Options, then a stated Recommendation — in that order, every time.
-15. **B** — "one set of numbers" describes the post-sign-off state where every function is working from the identical agreed plan, not a rule about who may type numbers into a system.
+**B** — "one set of numbers" describes the post-sign-off state where every function is working from the identical agreed plan, not a rule about who may type numbers into a system.
 
 </details>
 
 **Scoring:** 12+ → start Week 11. 9–11 → re-read the lecture sections behind your misses. <9 → re-read all three lectures from the top; reconciling demand, supply, and finance onto one plan is the foundation Week 11's risk-and-resilience work stress-tests directly.
+
+---

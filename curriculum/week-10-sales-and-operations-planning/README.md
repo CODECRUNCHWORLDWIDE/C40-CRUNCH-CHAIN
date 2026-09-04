@@ -18,6 +18,14 @@ By the end of this week, you will be able to:
 - **Reconcile** the operational plan (units, capacity, inventory) with the financial plan (revenue, margin) onto one set of numbers that both operations and finance can sign off on.
 - **Run** gap analysis on a constrained plan — identify exactly which months and families are short, quantify the shortfall, and recommend specific, costed actions to close it.
 
+## Standards this week meets
+
+| Bar | What this week is measured against |
+| --- | --- |
+| University | `MAN 3025` — perform aggregate planning against capacity, and run a sales and operations planning cycle that reconciles demand, supply and the financial plan. |
+| Industry | Bring one constrained, feasible plan and its financial reconciliation to an executive sign-off, on a single page, for the whole portfolio rather than the easy family. |
+| Beyond the bar | Base, upside and downside scenarios are built and costed, and the learner has to recommend which one capacity should actually be planned to — a choice the monthly cycle itself never forces — `challenges/challenge-02-scenario-planning-model.md` |
+
 ## Prerequisites
 
 - Comfortable with `SELECT`, `GROUP BY`, joins, and **window functions** (`SUM() OVER (... ORDER BY ...)`) in SQL — Weeks 2–7 of this course, or [C33 Crunch SQL](../../../C33-CRUNCH-SQL/) Weeks 4–5.
